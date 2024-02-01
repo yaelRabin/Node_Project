@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rest API table</title>
+</head>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 2px solid gray;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color:lightblue;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2rem;
+        text-align: center;
+        color: #7aceeb;
+    }
+
+    tr:hover {
+        background-color: rgba(128, 128, 128, 0.411) !important;
+    }
+</style>
+
+<body dir="rtl">
+    <h2>users</h2>
+    <table>
+        <tr>
+            <th>method (crud)</th>
+            <th>url</th>
+            <th>explanation</th>
+            <th>params</th>
+            <th>body</th>
+            <th style="width:8%;">who has access?</th>
+            <th style="width:5%;">must token?</th>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>http://localhost:7500/api/users</td>
+            <td>get all users from DB</td>
+            <td>-</td>
+            <td>-</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>http://localhost:7500/api/users/login/:id</td>
+            <td>get user by his id</td>
+            <td>id</td>
+            <td>-</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>http://localhost:7500/api/users</td>
+            <td>add user to DB (sign up)</td>
+            <td>-</td>
+            <td>userName (required,without spaces)<br>
+                password (required,6-30 letters/digits)<br>
+                email (required, valid email address)<br>
+            </td>
+            <td>anyone</td>
+            <td>X</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>http://localhost:7500/api/users/login</td>
+            <td>connect to user (sign in),creates and return token</td>
+            <td>-</td>
+            <td>email, password</td>
+            <td>anyone</td>
+            <td>X</td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>http://localhost:7500/api/users/login</td>
+            <td>delete use by his id</td>
+            <td>id</td>
+            <td>-</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+    </table>
+
+    <h2>products</h2>
+    <table>
+        <tr>
+            <th>method (crud)</th>
+            <th>url</th>
+            <th>explanation</th>
+            <th>params</th>
+            <th>body</th>
+            <th style="width:8%;">who has access?</th>
+            <th style="width:5%;">must token?</th>
+        </tr>
+
+        <tr>
+            <td>GET</td>
+            <td>http://localhost:7500/api/products</td>
+            <td>get all products from DB</td>
+            <td>- <br><b style="color: red;">query params**</b></td>
+            <td>-</td>
+            <td>anyone</td>
+            <td>X</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>http://localhost:7500/api/products/:id</td>
+            <td>get product by id</td>
+            <td>id</td>
+            <td>-</td>
+            <td>anyone</td>
+            <td>X</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>http://localhost:7500/api/products</td>
+            <td>add product to DB</td>
+            <td>-</td>
+            <td>name (required, 4-30 chars)<br>
+                price (required,min value-1)<br>
+                weight (required,min value-25)<br>
+                imgUrl , description, amountStock(min value-0,max-500)
+            </td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>PUT</td>
+            <td>http://localhost:7500/api/products/:id</td>
+            <td>edit product details by id</td>
+            <td>id</td>
+            <td>name / price / weight / imgUrl / description / amountStock</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>http://localhost:7500/api/products/:id</td>
+            <td>delete productd from DB by id</td>
+            <td>id</td>
+            <td>-</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+    </table>
+    <p style="text-align: left;font-size: larger;margin-top: 3%;"><b style="color: red;">query params - </b>
+        when you want to get all products from DB you can also send in the url-line some parameters and RegExp in order
+        to filter the results.<br>
+        :for example <br>
+        by requesting <u>http://localhost:7500/api/products?name=e&price=^140</u> you will get all the products that
+        their name includes the letter 'e' and their price is greater than 140<br>
+        by requesting <u>http://localhost:7500/api/products?name=^k&price=-100</u> you will get all the products that
+        their name begin with the letter 'k' and their price is less than or equal to 100<br>
+    </p>
+
+    <h2>orders</h2>
+    <table>
+        <tr>
+            <th>method (crud)</th>
+            <th>url</th>
+            <th>explanation</th>
+            <th>params</th>
+            <th>body</th>
+            <th style="width:8%;">who has access?</th>
+            <th style="width:5%;">must token?</th>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>http://localhost:7500/api/orders</td>
+            <td>get all orders from DB</td>
+            <td>-</td>
+            <td>-</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>http://localhost:7500/api/orders/user</td>
+            <td>get all orders of the user</td>
+            <td>-</td>
+            <td>-</td>
+            <td>logged user only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>http://localhost:7500/api/orders</td>
+            <td>add new order to DB</td>
+            <td>-</td>
+            <td>dueDate (required,later than today)<br>
+                address (required)<br>
+                products (required,array of elements in format{productId:string,amount:number})
+            </td>
+            <td>logged user only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>PUT</td>
+            <td>http://localhost:7500/api/orders/:id</td>
+            <td>update the order status (isInWay=true)</td>
+            <td>id</td>
+            <td>-</td>
+            <td>admin only</td>
+            <td>V</td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>http://localhost:7500/api/orders/:id</td>
+            <td>delete order from DB</td>
+            <td>id</td>
+            <td>-</td>
+            <td>admin or order owner</td>
+            <td>V</td>
+        </tr>
+
+    </table>
+</body>
+
+</html>
